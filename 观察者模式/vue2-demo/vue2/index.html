@@ -1,0 +1,60 @@
+<!--
+ * @Author: RONGWEI PENG
+ * @Date: 2020-08-19 22:00:17
+ * @LastEditors: Do not edit
+ * @LastEditTime: 2020-09-03 11:57:43
+ * @FilePath: /手写vue_demo/kvue/test01/index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写vue01</title>
+  </head>
+
+  <body>
+    <div id="app">
+      {{msg}}
+      <br />
+      {{age}}
+      <br />
+      <div v-text="msg"></div>
+      <input v-model="msg" type="text" />
+    </div>
+    <script src="./dep.js"></script>
+    <script src="./watcher.js"></script>
+    <script src="./compiler.js"></script>
+    <script src="./observer.js"></script>
+    <script src="./vue.js"></script>
+    <!-- <script src="./kvue.js"></script> -->
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          msg: "123",
+          age: 21
+        }
+        // created() {
+        //   console.log("开始啦");
+        //   setTimeout(() => {
+        //     this.name = "我是mock";
+        //   }, 1500);
+        // },
+        // methods: {
+        //   changeName() {
+        //     console.log("console", this);
+        //     this.name = "哈喽...";
+        //     this.age = 100;
+        //   }
+        // }
+      });
+      // console.log('console', app.$data.foo);
+      // app.$data.foo = "hello, kaikeba!";
+      // app.$data.obj.bar = "oh my bar";
+      // app.foo;
+      // app.foo = "hello, kaikeba!";
+      // app.obj.bar = "oh my bar";
+    </script>
+  </body>
+</html>
