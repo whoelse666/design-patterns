@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>代理模式</title>
+    <style>
+      .loading {
+        width: 50px;
+        height: 50px;
+        margin: 50px;
+      }
+      .img {
+        width: 200px;
+        height: 200px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="target">
+      <h1>代理模式</h1>
+    </div>
+    <script>
+      const defaultLoading = "https://icon-library.com/images/spinner-icon-gif/spinner-icon-gif-1.jpg";
+      const loadingImg =
+        "https://www.bing.com/th/id/OGC.5be365b4576b73da8de3e8e7cf5ba94d?pid=1.7&rurl=https%3a%2f%2fi.gifer.com%2f1amw.gif&ehk=9rtcJ5F5QZd9R5NLRXerBVyzq5lZV8eK3GF1WohOPvE%3d";
+      class MyImage {
+        constructor(loading) {
+          this.img = null;
+          this.loading = loading;
+          this.load();
+        }
+        //设置图片节点的src
+        setSrc(src) {
+          this.img.setAttribute("class", "img");
+          this.img.src = src;
+        }
+
+        load() {
+          this.img = document.createElement("img");
+          this.img.setAttribute("class", "loading");
+          this.img.src = this.loading || defaultLoading;
+          document.getElementById("target").appendChild(this.img);
+        }
+      }
+
+      class ProxyImage {
+        constructor(imgIns) {
+          this.imgIns = imgIns;
+          this.url = null;
+          this.img = new Image();
+        }
+        load(url, time) {
+          this.url = url;
+          this.img.src = url;
+          const self = this;
+          this.img.onload = function () {
+            setTimeout(() => {
+              self.imgIns.setSrc(self.url);
+            }, time || 500);
+          };
+        }
+      }
+
+      const ins1 = new MyImage(loadingImg);
+      const ins2 = new MyImage();
+      const img1 = new ProxyImage(ins1);
+      const img2 = new ProxyImage(ins2);
+      img1.load("https://tse3-mm.cn.bing.net/th/id/OIP-C.RgPyB9HffugLxJxjwZkBcQHaEo?w=264&h=180&c=7&r=0&o=5&dpr=2&pid=1.7");
+      img2.load("https://tse1-mm.cn.bing.net/th/id/OIP-C.-1M5jr488i7b9_0hbKmSKgHaEo?w=229&h=180&c=7&r=0&o=5&dpr=2&pid=1.7", 2000);
+    </script>
+  </body>
+</html>
