@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>装饰者模式</title>
+  </head>
+  <body>
+    <button id="button">btn</button>
+    <script>
+      Function.prototype.before = function (beforeFn) {
+        const _self = this; // 保存原函数的引用
+        // this ==function - document.getElementById
+        return function () {
+          beforeFn.apply(this, arguments); // 执行新函数，修正this指向
+          return _self.apply(this, arguments); // 执行原函数
+        };
+      };
+      Function.prototype.after = function (afterFn) {
+        const _self = this;
+        return function () {
+          var ret = _self.apply(this, arguments);
+          afterFn.apply(this, arguments);
+          return ret;
+        };
+      };
+
+      document.getElementById = document.getElementById.before(function () {
+        console.log("before");
+      });
+
+      var button = document.getElementById("button");
+      console.log(button);
+    </script>
+  </body>
+</html>
